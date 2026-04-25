@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body class="min-h-screen text-slate-800">
+    <main class="mx-auto max-w-6xl px-5 py-10 md:py-14">
+        <section class="rounded-3xl border border-amber-200 bg-white/90 p-6 shadow-xl shadow-amber-900/5 md:p-9">
+            <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+                <span class="inline-block rounded-full bg-amber-200 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-900">Dashboard</span>
+                <div class="text-sm text-slate-600">Signed in as {{ current_account.username }} | <a class="font-semibold text-amber-800 hover:text-amber-900" href="/account/logout/">Logout</a></div>
+            </div>
+            <h2 class="mb-3 text-4xl font-bold leading-tight md:text-6xl">Event Management</h2>
+            <p class="max-w-3xl text-base leading-7 text-slate-600 md:text-lg">
+                Navigate the core modules of the system from one place. Each section is wired into the Django project and ready for the next layer of forms, models, and CRUD pages.
+            </p>
+            <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {% for app in apps %}
+                    <a class="block rounded-2xl border border-amber-200 bg-amber-50/60 p-5 transition hover:-translate-y-1 hover:border-amber-500 hover:shadow-lg hover:shadow-amber-900/10" href="{{ app.path }}">
+                        <strong class="mb-2 block text-lg text-slate-800">{{ app.name }}</strong>
+                        <span class="block leading-7 text-slate-600">{{ app.summary }}</span>
+                    </a>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</body>
+</html>

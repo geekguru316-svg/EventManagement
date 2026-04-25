@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body class="min-h-screen text-slate-800">
+    <main class="mx-auto max-w-7xl px-5 py-10">
+        <div class="mb-6 flex flex-wrap items-center justify-between gap-2 text-sm text-slate-600">
+            <a class="font-semibold text-amber-800 hover:text-amber-900" href="/">Back to home</a>
+            <span>{{ current_account.username }} | <a class="font-semibold text-amber-800 hover:text-amber-900" href="/account/logout/">Logout</a></span>
+        </div>
+        <div class="grid gap-6 lg:grid-cols-[minmax(300px,360px),1fr]">
+            <section class="rounded-3xl border border-amber-200 bg-white p-7 shadow-lg shadow-amber-900/5">
+                <h1 class="mb-2 text-4xl font-bold">{{ title }}</h1>
+                <p class="mb-5 leading-7 text-slate-600">{{ description }}</p>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="notice-message">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                {% if form.non_field_errors %}
+                    <div class="notice-error">{{ form.non_field_errors }}</div>
+                {% endif %}
+                <form method="post" class="form-shell">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="mt-2 inline-flex items-center justify-center rounded-full bg-amber-800 px-5 py-3 font-semibold text-white transition hover:bg-amber-900">Save room</button>
+                </form>
+            </section>
+            <section class="table-shell rounded-3xl border border-amber-200 bg-white p-7 shadow-lg shadow-amber-900/5">
+                <h2 class="mb-4 text-3xl font-bold">Room Records</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Room Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in records %}
+                            <tr>
+                                <td>{{ record.room_name }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr><td>No room records yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </main>
+</body>
+</html>
