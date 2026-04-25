@@ -1,0 +1,84 @@
+/* Shared project styles: Tailwind handles layout/utilities, this file styles Django form/table defaults. */
+:root {
+    color-scheme: light;
+}
+
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    background-color: #D9DDDC;
+}
+
+.form-shell p {
+    margin: 0 0 0.95rem;
+}
+
+.form-shell .errorlist {
+    margin: 0.35rem 0 0.45rem;
+    padding: 0.55rem 0.7rem;
+    list-style: none;
+    border-radius: 0.6rem;
+    background: #fee2e2;
+    color: #991b1b;
+    font-size: 0.9rem;
+}
+
+.form-shell label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.95rem;
+    color: #475569;
+}
+
+.form-shell input,
+.form-shell select,
+.form-shell textarea {
+    width: 100%;
+    border: 1px solid #d6c4ad;
+    border-radius: 0.7rem;
+    background: #ffffff;
+    padding: 0.65rem 0.8rem;
+    color: #1f2937;
+    font: inherit;
+}
+
+.form-shell input:focus,
+.form-shell select:focus,
+.form-shell textarea:focus {
+    outline: 2px solid transparent;
+    border-color: #b45309;
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
+}
+
+.table-shell table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-shell th,
+.table-shell td {
+    text-align: left;
+    border-bottom: 1px solid #eadfcd;
+    padding: 0.72rem 0.6rem;
+    color: #52606d;
+}
+
+.table-shell th {
+    color: #334155;
+    font-weight: 700;
+}
+
+.notice-message {
+    margin-bottom: 1rem;
+    border-radius: 0.75rem;
+    background: #fef3c7;
+    color: #92400e;
+    padding: 0.75rem 0.85rem;
+}
+
+.notice-error {
+    margin-bottom: 1rem;
+    border-radius: 0.75rem;
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 0.75rem 0.85rem;
+}
