@@ -23,3 +23,14 @@ class EventUpdateForm(forms.ModelForm):
             "date_of_event": forms.DateInput(attrs={"type": "date"}),
             "max_participants": forms.NumberInput(attrs={"min": 1}),
         }
+
+
+class TeacherEventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = ["event_title", "date_of_event", "max_participants", "room"]
+        widgets = {
+            "event_title": forms.TextInput(attrs={"placeholder": "Career Talk 2026"}),
+            "date_of_event": forms.DateInput(attrs={"type": "date"}),
+            "max_participants": forms.NumberInput(attrs={"min": 1}),
+        }

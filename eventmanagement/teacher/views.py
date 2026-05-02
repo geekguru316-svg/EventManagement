@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 
 from account.auth import login_required
+from event.forms import TeacherEventForm
 from event.models import Event
 
 from .forms import TeacherAccountSettingsForm, TeacherForm, TeacherProfileSettingsForm
@@ -43,9 +44,10 @@ def dashboard(request):
         return redirect("home")
 
     teacher_profile = Teacher.objects.filter(account=request.account).first()
-    if request.method == "POST":
+    if request.method == "POST" and request.POST.get("form_type") == "profile":
         account_form = TeacherAccountSettingsForm(request.POST, instance=request.account)
         profile_form = TeacherProfileSettingsForm(request.POST, instance=teacher_profile)
+        event_form = TeacherEventForm()
         if account_form.is_valid() and profile_form.is_valid():
             account_form.save()
             profile = profile_form.save(commit=False)
@@ -54,9 +56,24 @@ def dashboard(request):
             messages.success(request, "Profile settings updated.")
             return redirect("teacher:dashboard")
         messages.error(request, "Please correct the form errors below.")
+    elif request.method == "POST" and request.POST.get("form_type") == "event":
+        account_form = TeacherAccountSettingsForm(instance=request.account)
+        profile_form = TeacherProfileSettingsForm(instance=teacher_profile)
+        event_form = TeacherEventForm(request.POST)
+        if teacher_profile is None:
+            messages.error(request, "Complete your teacher profile before creating an event.")
+        elif event_form.is_valid():
+            event = event_form.save(commit=False)
+            event.teacher = teacher_profile
+            event.save()
+            messages.success(request, "Event created successfully.")
+            return redirect("teacher:dashboard")
+        else:
+            messages.error(request, "Please correct the event form errors below.")
     else:
         account_form = TeacherAccountSettingsForm(instance=request.account)
         profile_form = TeacherProfileSettingsForm(instance=teacher_profile)
+        event_form = TeacherEventForm()
 
     assigned_events = Event.objects.select_related("room").filter(
         teacher__account=request.account,
@@ -71,6 +88,7 @@ def dashboard(request):
             "teacher_profile": teacher_profile,
             "account_form": account_form,
             "profile_form": profile_form,
+            "event_form": event_form,
             "assigned_events": assigned_events,
         },
     )

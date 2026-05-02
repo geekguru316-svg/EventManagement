@@ -6,4 +6,6 @@ __pycache__/
 *.sqlite3
 db.sqlite3
 eventmanagement/db.sqlite3
+demo-disabled-build.zip
+demo_disabled_build/
 .DS_Store

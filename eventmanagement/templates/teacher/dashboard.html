@@ -33,6 +33,7 @@
                     <p class="mb-4 text-sm text-slate-600">Update your account and teacher profile details.</p>
                     <form method="post" class="form-shell">
                         {% csrf_token %}
+                        <input type="hidden" name="form_type" value="profile">
                         <h3 class="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-600">Account</h3>
                         {{ account_form.as_p }}
                         <h3 class="mb-2 mt-4 text-sm font-semibold uppercase tracking-wide text-slate-600">Teacher Info</h3>
@@ -74,6 +75,20 @@
                     {% endif %}
                 </section>
             </div>
+
+            <section class="mt-6 rounded-2xl border border-amber-200 bg-amber-50/30 p-5">
+                <h2 class="mb-3 text-2xl font-bold">Create Event</h2>
+                <p class="mb-4 text-sm text-slate-600">New events you create will be assigned to your teacher profile.</p>
+                {% if event_form.non_field_errors %}
+                    <div class="notice-error">{{ event_form.non_field_errors }}</div>
+                {% endif %}
+                <form method="post" class="form-shell">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="event">
+                    {{ event_form.as_p }}
+                    <button type="submit" class="mt-2 inline-flex items-center justify-center rounded-full bg-amber-800 px-5 py-3 font-semibold text-white transition hover:bg-amber-900">Create event</button>
+                </form>
+            </section>
         </section>
     </main>
 </body>

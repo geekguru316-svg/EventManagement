@@ -58,6 +58,8 @@
                                     <th>Date</th>
                                     <th>Teacher</th>
                                     <th>Room</th>
+                                    <th>Slots</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,6 +69,19 @@
                                         <td>{{ event.date_of_event }}</td>
                                         <td>{{ event.teacher.account.username }}</td>
                                         <td>{{ event.room.room_name }}</td>
+                                        <td>{{ event.registered_count }} / {{ event.max_participants }}</td>
+                                        <td>
+                                            {% if event.is_registered %}
+                                                <span class="inline-flex items-center justify-center rounded-full border border-green-300 px-3 py-1 text-xs font-semibold text-green-700">Registered</span>
+                                            {% elif event.is_full %}
+                                                <span class="inline-flex items-center justify-center rounded-full border border-slate-300 px-3 py-1 text-xs font-semibold text-slate-600">Full</span>
+                                            {% else %}
+                                                <form method="post" action="{% url 'student:register_event' event.event_id %}">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="inline-flex items-center justify-center rounded-full border border-amber-300 px-3 py-1 text-xs font-semibold text-amber-800 hover:bg-amber-100">Register</button>
+                                                </form>
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
