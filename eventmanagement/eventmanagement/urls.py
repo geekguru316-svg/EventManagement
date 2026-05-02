@@ -20,6 +20,8 @@ def home(request):
             "current_account": account,
             "apps": [
                 {"name": "Account", "path": "/account/", "summary": "User identities and roles"},
+                {"name": "Event", "path": "/event/", "summary": "Schedules, rooms, and ownership"},
+                {"name": "Room", "path": "/room/", "summary": "Event venue records"},
                 {"name": "Student", "path": "/student/", "summary": "Student profiles and attendance"},
                 {"name": "Teacher", "path": "/teacher/", "summary": "Teacher profiles and assignments"},
             ]
@@ -30,6 +32,8 @@ def home(request):
 urlpatterns = [
     path('', home, name='home'),
     path('account/', include('account.urls')),
+    path('event/', include('event.urls')),
+    path('room/', include('room.urls')),
     path('student/', include('student.urls')),
     path('teacher/', include('teacher.urls')),
     path('admin/', admin.site.urls),
